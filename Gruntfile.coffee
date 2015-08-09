@@ -19,6 +19,8 @@ module.exports = (grunt) ->
     env:
       test:
         NODE_ENV: 'test'
+      'test-verbose':
+        NODE_ENV: 'test-verbose'
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-mocha-test'
@@ -26,6 +28,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'build', ['coffee:dev']
   grunt.registerTask 'test', ['coffee:dev', 'env:test', 'mochaTest:dev']
+  grunt.registerTask 'test-verbose', ['coffee:dev', 'env:test-verbose', 'mochaTest:dev']
 
   grunt.registerTask 'default', ->
     grunt.log.writeln """
