@@ -13,7 +13,7 @@ Promise.promisifyAll require('request')
 module.exports.log = log = -> true
 
 # add debug logger
-if process.env.NODE_ENV is 'test'
+if process.env.NODE_ENV is 'test-verbose'
   module.exports.log = log = console.log
 
 filter_value = (filter, value) ->
@@ -31,7 +31,7 @@ filter_value = (filter, value) ->
   if Object.keys(filters).indexOf(filter) isnt -1
     value = filters[filter] value
   else
-    throw new StatusError 400, 'filter not found: ' + filter
+    throw new Error 'filter not found: ' + filter
     return value
 
 match_value = (type, $selector, value, condition) ->
@@ -93,16 +93,21 @@ fetch_json = (rules) ->
 
   log rules.url
   
+  rules.encoding ?= 'utf-8'
+  
+  # if ['EUR-KR', 'UTF-8'].indexOf(rules.encoding.toUpperCase()) is -1
+  #   throw new Error 'encoding invalid: utf-8, euc-kr'
+
   request.getAsync
     url: rules.url
     rejectUnauthorized: false
     timeout: rules.timeout
     headers: rules.headers
-    encoding: null
+    encoding: rules.encoding
   .spread (response, body) ->
     if rules.encoding is 'euc-kr'
       body = new iconv('EUC-KR', 'UTF-8').convert(body)
-
+    log body.toString()
     $ = cheerio.load body
 
     result = {}
@@ -114,7 +119,7 @@ fetch_json = (rules) ->
         if parent
           result[selector.key] = find_value $, selector, parent
         else
-          throw new StatusError 400, 'parent not found: ' + selector.key.split('[]')[0] + '[]'
+          throw new Error 'parent not found: ' + selector.key.split('[]')[0] + '[]'
           log result
       else
         result[selector.key] = find_value $, selector
