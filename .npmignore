@@ -1,2 +1,9 @@
-src/
-test/
+node_modules
+src
+test
+
+*.sublime-*
+
+Gruntfile.coffee
+npm-debug.log
+.DS_Store
