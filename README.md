@@ -86,9 +86,9 @@ Then, it brings the result
 ```json
 {
   "items": [ 
-    { "label": "aaa", src: 1 }
-    { "label": "bbb", src: 2 }
-    { "label": "default", src: 3 }
+    { "label": "aaa", "src": 1 }
+    { "label": "bbb", "src": 2 }
+    { "label": "default", "src": 3 }
   ]
 }
 ```
