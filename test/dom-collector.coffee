@@ -13,9 +13,9 @@ describe 'dom-collector', ->
   describe 'collector', ->
     it 'should be return array', (done) ->
       rule =
-        url: 'http://embed.plnkr.co/dYaZqlxLtD5DrQX01zZB/preview'
+        url: 'https://gist.githubusercontent.com/eces/f8d377992a12f64dc353/raw/75fd1607925e12bb82fdc7890514a3899781531d/test-01.html'
         timeout: 15000
-        encoding: 'euc-kr'
+        encoding: 'utf8'
         params: []
         headers: 
           'User-Agent': 'Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10'
@@ -33,19 +33,14 @@ describe 'dom-collector', ->
             filter: 'trim'
             default: 'default'
           }
-          # {
-          #   key: 'items[].src'
-          #   value: 'a[href]'
-          #   type: 'string'
-          # }
         ]
       
       task = collector.fetch_json rule
       task.then (result) ->
-        console.log '>>', result
-        done()
-      # .then (result) ->
+        expected = [ { label: 'aaa' }, { label: 'bbb' }, { label: '' } ]
 
-      # assert.isArray result
-      # assert.equals
-      # collector.log = console.log
+        assert.property result, 'items'
+        assert.isArray result.items
+        assert.deepEqual result.items, expected
+        
+        done()
