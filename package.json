@@ -1,6 +1,6 @@
 {
   "name": "dom-collector",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A simple DOM crawler based on JSON scheme.",
   "main": "lib/dom-collector.js",
   "scripts": {

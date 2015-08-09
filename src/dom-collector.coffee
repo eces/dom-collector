@@ -104,7 +104,7 @@ fetch_json = (rules) ->
     rejectUnauthorized: false
     timeout: rules.timeout
     headers: rules.headers
-    encoding: rules.encoding
+    encoding: null
   .spread (response, body) ->
     if rules.encoding is 'euc-kr'
       body = new iconv('EUC-KR', 'UTF-8').convert(body)
