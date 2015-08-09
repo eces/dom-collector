@@ -1,10 +1,11 @@
 {
   "name": "dom-collector",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple DOM crawler based on JSON scheme.",
   "main": "lib/dom-collector.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "prepublish": "grunt coffee"
   },
   "repository": {
     "type": "git",
