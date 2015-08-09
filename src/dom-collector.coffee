@@ -76,6 +76,7 @@ find_value = ($, selector, parent = '', self = false) ->
 
       value = match_value selector.type, $selector, value, selector.match if selector.match
       value = filter_value (selector.filter + ' ' + selector.type), value, selector.default
+      value = selector.default if (not value) or value.length is 0
       value
     else 
       # elem list
