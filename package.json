@@ -1,6 +1,6 @@
 {
   "name": "dom-collector",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A simple DOM crawler based on JSON scheme.",
   "main": "lib/dom-collector.js",
   "scripts": {
@@ -36,7 +36,7 @@
     "grunt-contrib-coffee": "^0.13.0",
     "grunt-env": "^0.4.4",
     "grunt-mocha-test": "^0.12.7",
-    "iconv": "^2.1.10",
+    "iconv": "^2.1.2",
     "lodash": "^3.10.1",
     "mocha": "^2.2.5",
     "request": "^2.60.0"
