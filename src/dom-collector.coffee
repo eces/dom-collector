@@ -67,6 +67,10 @@ find_value = ($, selector, parent = '', self = false) ->
     if $selector.length is 0
       return selector.default
     else if $selector.length is 1
+      # custom selector given
+      if _.isFunction selector._value
+        $selector = selector._value $selector
+
       # single elem
       if attribute_name
         # [attr]
