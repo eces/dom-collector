@@ -16,18 +16,33 @@ module.exports.log = log = -> true
 if process.env.NODE_ENV is 'test-verbose'
   module.exports.log = log = console.log
 
-filter_value = (filter, value) ->
+filter_value = (option) ->
+  if _.isFunction option.name
+    func = option.name
+    value = func option.value
+    return value
+
+  unless option.name
+    filter = option.name = option.type
+  else
+    if option.type
+      filter = option.name + ' ' + option.type
+    else
+      filter = option.name
+
+  value = option.value
+
   # multiple filter given
   if filter.indexOf(' ') isnt -1
     list = filter.split ' '
     for item in list
       if item is 'undefined'
         continue
-      value = filter_value item, value
+      value = filter_value 
+        name: item
+        value: value
     return value
 
-  unless filter
-    return value
   if Object.keys(filters).indexOf(filter) isnt -1
     value = filters[filter] value
   else
@@ -79,8 +94,13 @@ find_value = ($, selector, parent = '', self = false) ->
         value = $selector.text() or $selector.val()
 
       value = match_value selector.type, $selector, value, selector.match if selector.match
-      value = filter_value (selector.filter + ' ' + selector.type), value, selector.default
       value = selector.default if (not value) or value.length is 0
+      value = filter_value {
+        name: selector.filter
+        type: selector.type
+        value: value
+        default: selector.default
+      }
       value
     else 
       # elem list

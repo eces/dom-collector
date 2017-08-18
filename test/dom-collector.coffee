@@ -96,3 +96,42 @@ describe 'dom-collector', ->
         assert.deepEqual result.items, expected
         
         done()
+
+    it 'should accept function filter', (done) ->
+      rule =
+        url: 'https://gist.githubusercontent.com/eces/f8d377992a12f64dc353/raw/a6ec9951dc78ae9921d86acb87820433e83d8afe/test-02.html'
+        timeout: 15000
+        encoding: 'utf8'
+        params: []
+        headers: 
+          'User-Agent': 'Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10'
+        selector: [
+          {
+            key: 'items[]'
+            value: '#content-list li'
+            type: 'array'
+            default: []
+          }
+          {
+            key: 'items[].label'
+            value: 'a'
+            type: 'string'
+            # filter: (v) -> v.trim().replace 'a', 'b'
+            filter: (v) -> '(' + String(v).trim() + ')'
+            default: 'default'
+          }
+        ]
+      
+      task = collector.fetch_json rule
+      task.then (result) ->
+        expected = [ 
+          { label: '(aaa)' }
+          { label: '(bbb)' }
+          { label: '(default)' }
+        ]
+
+        assert.property result, 'items'
+        assert.isArray result.items
+        assert.deepEqual result.items, expected
+        
+        done()

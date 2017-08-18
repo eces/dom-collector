@@ -163,6 +163,14 @@ Reference: eces/dom-collector/src/filter.coffee
 
 `value` to `Boolean(value)`
 
+##### Using custom function
+
+The value is directly transformed by given function that is capable of any value also including `null`, `undefined`.
+
+```
+filter: (v) -> '(' + String(v).trim() + ')'
+```
+
 Please be aware of unintended boolean conversion from this reading [MDN - Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean).
 
 > The value passed as the first parameter is converted to a boolean value, if necessary. If value is omitted or is 0, -0, null, false, NaN, undefined, or the empty string (""), the object has an initial value of false. All other values, including any object or the string "false", create an object with an initial value of true.
